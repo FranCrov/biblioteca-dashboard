@@ -13,22 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Admin del sistema (un único user)
-model user {
-  id        Int       @id @default(autoincrement())
-  username  String    @unique
-  email     String    @unique
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-// Usuarios normales (socios de la biblioteca)
+// Usuarios finales (socios)
 model Usuario {
   id        Int        @id @default(autoincrement())
+  clerkId   String     @unique
   nombre    String
   email     String     @unique
-  prestamos Prestamo[] @relation("UsuarioPrestamos")
+  prestamos Prestamo[] @relation("UsuarioPrestamos")   // 👈 le ponemos nombre
 }
 
 model Autor {
@@ -52,8 +43,7 @@ model Prestamo {
   usuarioId Int
   libroId   Int
 
-  usuario   Usuario  @relation("UsuarioPrestamos", fields: [usuarioId], references: [id])
-  libro     Libro    @relation("LibroPrestamos", fields: [libroId], references: [id])
+  usuario   Usuario  @relation("UsuarioPrestamos", fields: [usuarioId], references: [id]) // 👈 mismo nombre que arriba
+  libro     Libro    @relation("LibroPrestamos", fields: [libroId], references: [id])     // 👈 mismo nombre que arriba
 }
-
 
