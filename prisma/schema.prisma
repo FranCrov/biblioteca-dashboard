@@ -13,13 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Usuarios finales (socios)
-model Usuario {
+// User/admin
+model User {
+  id        Int       @id @default(autoincrement())
+  clerkId   String    @unique    // ID de Clerk
+  nombre    String
+  email     String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Cliente {
   id        Int        @id @default(autoincrement())
-  clerkId   String     @unique
   nombre    String
   email     String     @unique
-  prestamos Prestamo[] @relation("UsuarioPrestamos")   // 👈 le ponemos nombre
+  prestamos Prestamo[] @relation("ClientePrestamos")
 }
 
 model Autor {
@@ -40,10 +48,10 @@ model Libro {
 model Prestamo {
   id        Int      @id @default(autoincrement())
   fecha     DateTime @default(now())
-  usuarioId Int
+  clienteId Int
   libroId   Int
 
-  usuario   Usuario  @relation("UsuarioPrestamos", fields: [usuarioId], references: [id]) // 👈 mismo nombre que arriba
-  libro     Libro    @relation("LibroPrestamos", fields: [libroId], references: [id])     // 👈 mismo nombre que arriba
+  cliente   Cliente  @relation("ClientePrestamos", fields: [clienteId], references: [id])
+  libro     Libro    @relation("LibroPrestamos", fields: [libroId], references: [id])
 }
 
