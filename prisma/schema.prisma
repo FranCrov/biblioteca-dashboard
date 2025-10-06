@@ -14,6 +14,7 @@ datasource db {
 }
 
 // User/admin
+// 🧑‍💻 Usuario administrador (autenticado con Clerk)
 model User {
   id        Int       @id @default(autoincrement())
   clerkId   String    @unique    // ID de Clerk
@@ -23,6 +24,7 @@ model User {
   updatedAt DateTime  @updatedAt
 }
 
+// 👤 Cliente / Socio de la biblioteca
 model Cliente {
   id        Int        @id @default(autoincrement())
   nombre    String
@@ -30,28 +32,60 @@ model Cliente {
   prestamos Prestamo[] @relation("ClientePrestamos")
 }
 
+// 🧑‍🏫 Empleado / Bibliotecario
+model Empleado {
+  id        Int       @id @default(autoincrement())
+  nombre    String
+  email     String    @unique
+  prestamos Prestamo[]
+}
+
+// ✍️ Autor
 model Autor {
-  id     Int    @id @default(autoincrement())
+  id     Int     @id @default(autoincrement())
   nombre String
   libros Libro[]
 }
 
+// 📚 Categoría / Género
+model Categoria {
+  id     Int     @id @default(autoincrement())
+  nombre String
+  libros Libro[]
+}
+
+// 📖 Libro
 model Libro {
-  id        Int       @id @default(autoincrement())
-  titulo    String
-  stock     Int
-  autorId   Int
-  autor     Autor     @relation(fields: [autorId], references: [id])
-  prestamos Prestamo[] @relation("LibroPrestamos")
+  id          Int         @id @default(autoincrement())
+  titulo      String
+  stock       Int
+  autorId     Int
+  categoriaId Int
+  autor       Autor       @relation(fields: [autorId], references: [id])
+  categoria   Categoria   @relation(fields: [categoriaId], references: [id])
+  prestamos   Prestamo[]  @relation("LibroPrestamos")
 }
 
+// 📆 Préstamo
 model Prestamo {
-  id        Int      @id @default(autoincrement())
-  fecha     DateTime @default(now())
-  clienteId Int
-  libroId   Int
+  id          Int        @id @default(autoincrement())
+  fecha       DateTime   @default(now())
+  devuelto    Boolean    @default(false)  // Estado del préstamo
+  clienteId   Int
+  libroId     Int
+  empleadoId  Int?
 
-  cliente   Cliente  @relation("ClientePrestamos", fields: [clienteId], references: [id])
-  libro     Libro    @relation("LibroPrestamos", fields: [libroId], references: [id])
+  cliente     Cliente    @relation("ClientePrestamos", fields: [clienteId], references: [id])
+  libro       Libro      @relation("LibroPrestamos", fields: [libroId], references: [id])
+  empleado    Empleado?  @relation(fields: [empleadoId], references: [id])
+  devolucion  Devolucion?
 }
 
+// 🔙 Devolución
+model Devolucion {
+  id          Int       @id @default(autoincrement())
+  prestamoId  Int       @unique
+  fecha       DateTime  @default(now())
+  observacion String?
+  prestamo    Prestamo  @relation(fields: [prestamoId], references: [id])
+}

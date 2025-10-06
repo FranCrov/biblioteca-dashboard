@@ -10,12 +10,12 @@ export async function POST() {
   }
 
   // Ver si ya existe en tu BD
-  const existingUser = await prisma.usuario.findUnique({
+  const existingUser = await prisma.user.findUnique({
     where: { clerkId: user.id },
   });
 
   if (!existingUser) {
-    await prisma.usuario.create({
+    await prisma.user.create({
       data: {
         clerkId: user.id,
         nombre: user.firstName || "Sin nombre",
