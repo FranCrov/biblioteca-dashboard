@@ -11,14 +11,20 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Plus, Search } from "lucide-react"
+import { Plus } from "lucide-react"
+import {prisma} from "@/lib/db"
+import { ClientesTable } from "@/components/clientes-table"
 
-export default function ClientesPage() {
+export default async function ClientesPage() {
+  const clientes = await prisma.cliente.findMany({
+    orderBy: { id: "asc" },
+  })
+
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
+        {/* HEADER */}
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
@@ -26,7 +32,7 @@ export default function ClientesPage() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
+                  <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
@@ -36,6 +42,8 @@ export default function ClientesPage() {
             </Breadcrumb>
           </div>
         </header>
+
+        {/* CONTENIDO */}
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="flex items-center justify-between">
             <div>
@@ -47,21 +55,8 @@ export default function ClientesPage() {
               Agregar Cliente
             </Button>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Buscar clientes..." className="pl-8" />
-            </div>
-          </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Lista de Clientes</CardTitle>
-              <CardDescription>Todos los usuarios registrados</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-muted-foreground text-center py-8">Contenido de la tabla de clientes aquí</div>
-            </CardContent>
-          </Card>
+
+          <ClientesTable clientes={clientes} />
         </div>
       </SidebarInset>
     </SidebarProvider>
