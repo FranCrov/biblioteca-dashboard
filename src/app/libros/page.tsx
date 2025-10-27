@@ -1,3 +1,6 @@
+'use client'
+
+import { useState, useEffect } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -13,8 +16,34 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Plus, Search } from "lucide-react"
+import { LibrosTable } from "@/components/libros-table"
 
 export default function LibrosPage() {
+  const [libros, setLibros] = useState([])
+  const [search, setSearch] = useState("")
+  const [filtered, setFiltered] = useState([])
+
+  // 🔹 Cargar los libros desde la API al montar el componente
+  useEffect(() => {
+    const fetchLibros = async () => {
+      const res = await fetch("/api/libros")
+      const data = await res.json()
+      setLibros(data)
+      setFiltered(data)
+    }
+    fetchLibros()
+  }, [])
+
+  // 🔹 Filtrar libros en tiempo real
+  useEffect(() => {
+    const results = libros.filter((libro: any) =>
+      libro.titulo.toLowerCase().includes(search.toLowerCase()) ||
+      libro.autor.nombre.toLowerCase().includes(search.toLowerCase()) ||
+      libro.categoria.nombre.toLowerCase().includes(search.toLowerCase())
+    )
+    setFiltered(results)
+  }, [search, libros])
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -36,6 +65,7 @@ export default function LibrosPage() {
             </Breadcrumb>
           </div>
         </header>
+
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="flex items-center justify-between">
             <div>
@@ -47,19 +77,26 @@ export default function LibrosPage() {
               Agregar Libro
             </Button>
           </div>
+
           <div className="flex items-center gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Buscar libros..." className="pl-8" />
+              <Input
+                placeholder="Buscar libros..."
+                className="pl-8"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
             </div>
           </div>
+
           <Card>
             <CardHeader>
               <CardTitle>Catálogo de Libros</CardTitle>
               <CardDescription>Lista completa de libros disponibles</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-muted-foreground text-center py-8">Contenido de la tabla de libros aquí</div>
+              <LibrosTable libros={filtered} />
             </CardContent>
           </Card>
         </div>

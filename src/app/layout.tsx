@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SyncUser from "@/components/SyncUser";
+import './globals.css'
 
 import {
   ClerkProvider,
