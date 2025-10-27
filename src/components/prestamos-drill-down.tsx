@@ -59,14 +59,14 @@ export function PrestamosDrillDown({ categoriasData }: { categoriasData: Categor
   }
 
   const getStatusColor = (loans: number) => {
-    if (loans > 20) return "text-green-600"
-    if (loans >= 10) return "text-yellow-600"
+    if (loans > 10) return "text-green-600"
+    if (loans >= 5) return "text-yellow-600"
     return "text-red-600"
   }
 
   const getStatusBadge = (loans: number) => {
-    if (loans > 20) return <Badge className="bg-green-600">Alto</Badge>
-    if (loans >= 10) return <Badge className="bg-yellow-600">Medio</Badge>
+    if (loans > 10) return <Badge className="bg-green-600">Alto</Badge>
+    if (loans >= 5) return <Badge className="bg-yellow-600">Medio</Badge>
     return <Badge className="bg-red-600">Bajo</Badge>
   }
 

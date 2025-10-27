@@ -33,7 +33,7 @@ export default async function PrestamosPage() {
     libros: c.libros.map((l) => ({
       id: l.id,
       title: l.titulo,
-      author: l.autor ? l.autor.nombre : "—",  // lo completamos en el drill-down
+      author: l.autor ? l.autor.nombre : "—",  
       loans: l.prestamos.length,
     })),
   }))
