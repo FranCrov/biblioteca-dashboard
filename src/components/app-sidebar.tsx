@@ -4,7 +4,6 @@ import type * as React from "react"
 import { BookOpen, Users, BookMarked, RotateCcw, Settings, LayoutDashboard, Library } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -84,7 +83,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <div className="px-4 py-2 text-sm text-muted-foreground">
+          Versión 1.0.0
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
