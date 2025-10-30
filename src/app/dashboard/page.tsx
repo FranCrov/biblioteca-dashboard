@@ -28,7 +28,6 @@ export default async function DashboardPage() {
             </Breadcrumb>
           </div>
         </header>
-
         {/* Contenido */}
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           {/* Cards principales */}
@@ -62,7 +61,6 @@ export default async function DashboardPage() {
               change="+2.1% desde el mes pasado"
             />
           </div>
-
           {/* Actividad reciente + libros populares */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
             {/* Actividad reciente */}
@@ -94,7 +92,6 @@ export default async function DashboardPage() {
                 </div>
               </CardContent>
             </Card>
-
             {/* Libros populares */}
             <Card className="col-span-3">
               <CardHeader>

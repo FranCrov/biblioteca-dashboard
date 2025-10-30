@@ -13,8 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User/admin
-// 🧑‍💻 Usuario administrador (autenticado con Clerk)
 model User {
   id        Int       @id @default(autoincrement())
   clerkId   String    @unique    // ID de Clerk
@@ -24,7 +22,6 @@ model User {
   updatedAt DateTime  @updatedAt
 }
 
-// 👤 Cliente / Socio de la biblioteca
 model Cliente {
   id        Int        @id @default(autoincrement())
   nombre    String
@@ -34,8 +31,7 @@ model Cliente {
   createdAt DateTime  @default(now())
   prestamos Prestamo[] @relation("ClientePrestamos")
 }
-
-// 🧑‍🏫 Empleado / Bibliotecario
+ 
 model Empleado {
   id        Int       @id @default(autoincrement())
   nombre    String
@@ -43,21 +39,18 @@ model Empleado {
   prestamos Prestamo[]
 }
 
-// ✍️ Autor
 model Autor {
   id     Int     @id @default(autoincrement())
   nombre String
   libros Libro[]
 }
 
-// 📚 Categoría / Género
 model Categoria {
   id     Int     @id @default(autoincrement())
   nombre String
   libros Libro[]
 }
 
-// 📖 Libro
 model Libro {
   id          Int         @id @default(autoincrement())
   titulo      String
@@ -69,7 +62,6 @@ model Libro {
   prestamos   Prestamo[]  @relation("LibroPrestamos")
 }
 
-// 📆 Préstamo
 model Prestamo {
   id          Int        @id @default(autoincrement())
   fecha       DateTime   @default(now())
@@ -84,7 +76,6 @@ model Prestamo {
   devolucion  Devolucion?
 }
 
-// 🔙 Devolución
 model Devolucion {
   id          Int       @id @default(autoincrement())
   prestamoId  Int       @unique

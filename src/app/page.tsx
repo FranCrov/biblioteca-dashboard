@@ -1,83 +1,54 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { BookOpen, Users, BookMarked, TrendingUp } from "lucide-react"
-import Link from "next/link"
+'use client'
 
-export default function Page() {
+import { SignInButton, SignedOut, SignedIn, UserButton } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { BookOpen } from 'lucide-react'
+import { motion } from 'framer-motion' 
+
+export default function HomePage() {
+  const router = useRouter()
+
   return (
-    <SidebarProvider>
-      <AppSidebar>
-        <SidebarInset>
-          <SidebarTrigger />
-          <div className="p-6 space-y-6">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <Link href="/">Home</Link>
-                </BreadcrumbItem>
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Dashboard</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-            <Separator />
-            <h1 className="text-2xl font-bold">Dashboard</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BookOpen size={20} />
-                    Libros
-                  </CardTitle>
-                  <CardDescription>Total de libros registrados</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-3xl font-bold">1,234</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users size={20} />
-                    Clientes
-                  </CardTitle>
-                  <CardDescription>Total de clientes registrados</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-3xl font-bold">567</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BookMarked size={20} />
-                    Préstamos
-                  </CardTitle>
-                  <CardDescription>Total de préstamos activos</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-3xl font-bold">89</p>
-                </CardContent>      
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp size={20} />
-                    Devoluciones
-                  </CardTitle>
-                  <CardDescription>Total de devoluciones este mes</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-3xl font-bold">45</p>
-                </CardContent>
-              </Card>
-            </div>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center space-y-8 p-6"
+      >
+        <div className="flex flex-col items-center space-y-4">
+          <BookOpen className="h-16 w-16 text-indigo-600" />
+          <h1 className="text-4xl font-bold text-gray-800">
+            Bienvenido a la Biblioteca Virtual
+          </h1>
+          <p className="text-gray-600 max-w-md">
+            Accedé con tu cuenta para explorar el panel de control, gestionar libros, clientes y préstamos.
+          </p>
+        </div>
+
+        <SignedOut>
+          <div className="flex justify-center">
+            <SignInButton mode="modal">
+              <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-8">
+                Iniciar sesión
+              </Button>
+            </SignInButton>
           </div>
-        </SidebarInset>
-      </AppSidebar>
-    </SidebarProvider>
+        </SignedOut>
+
+        <SignedIn>
+          <div className="flex flex-col items-center space-y-4">
+            <UserButton afterSignOutUrl="/" />
+            <Button
+              onClick={() => router.push('/dashboard')}
+              className="bg-green-600 hover:bg-green-700 text-white rounded-full px-8"
+            >
+              Ir al Dashboard
+            </Button>
+          </div>
+        </SignedIn>
+      </motion.div>
+    </div>
   )
 }
