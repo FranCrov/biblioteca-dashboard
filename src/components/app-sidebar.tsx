@@ -1,7 +1,7 @@
 "use client"
 
 import type * as React from "react"
-import { BookOpen, Users, BookMarked, RotateCcw, Settings, LayoutDashboard, Library } from "lucide-react"
+import { BookOpen, Users, BookMarked, RotateCcw, Settings, LayoutDashboard, Library, UserRoundCog } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
 import {
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { title } from "process"
 
 const data = {
   user: {
@@ -38,6 +39,11 @@ const data = {
       title: "Clientes",
       url: "/clientes",
       icon: Users,
+    },
+    {
+      title: "Empleados",
+      url: "/empleados",
+      icon: UserRoundCog,
     },
     {
       title: "Préstamos",

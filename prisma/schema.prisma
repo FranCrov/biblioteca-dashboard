@@ -35,7 +35,10 @@ model Cliente {
 model Empleado {
   id        Int       @id @default(autoincrement())
   nombre    String
-  email     String    @unique
+  apellido  String
+  email     String     @unique
+  telefono  String?
+  puesto    String?
   prestamos Prestamo[]
 }
 
