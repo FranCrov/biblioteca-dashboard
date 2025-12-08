@@ -1,0 +1,824 @@
+-- =================================================================
+-- SCRIPT DE DATOS MASIVOS V8 (CORREGIDO CON 50 CLIENTES)
+-- Desactiva Safe Update Mode, Foreign Keys, y reinicia contadores.
+-- =================================================================
+
+USE biblioteca;
+
+-- =========================================
+-- REINICIO SEGURO Y TOTAL DE LA BASE DE DATOS
+-- =========================================
+SET @OLD_SQL_SAFE_UPDATES = @@SQL_SAFE_UPDATES;
+SET SQL_SAFE_UPDATES = 0; -- DESACTIVAR MODO SEGURO
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Se usa DELETE en lugar de TRUNCATE
+DELETE FROM Devolucion;
+DELETE FROM Prestamo;
+DELETE FROM Libro;
+DELETE FROM Cliente;
+DELETE FROM Empleado;
+DELETE FROM Autor;
+DELETE FROM Categoria;
+
+-- FORZAR REINICIO DE AUTO_INCREMENT A 1
+ALTER TABLE Autor AUTO_INCREMENT = 1;
+ALTER TABLE Categoria AUTO_INCREMENT = 1;
+ALTER TABLE Empleado AUTO_INCREMENT = 1;
+ALTER TABLE Cliente AUTO_INCREMENT = 1;
+ALTER TABLE Libro AUTO_INCREMENT = 1;
+ALTER TABLE Prestamo AUTO_INCREMENT = 1;
+ALTER TABLE Devolucion AUTO_INCREMENT = 1;
+
+SET FOREIGN_KEY_CHECKS = 1;
+SET SQL_SAFE_UPDATES = @OLD_SQL_SAFE_UPDATES; -- REACTIVAR MODO SEGURO
+
+-- =========================================
+-- AUTORES (30 en total)
+-- =========================================
+INSERT INTO Autor (nombre) VALUES
+('Gabriel García Márquez'),  -- 1
+('Miguel de Cervantes'),     -- 2
+('Antoine de Saint-Exupéry'),-- 3
+('Homero'),                  -- 4
+('Jane Austen'),             -- 5
+('Stephen Hawking'),         -- 6
+('Isaac Asimov'),            -- 7
+('Yuval Noah Harari'),       -- 8
+('Mary Shelley'),            -- 9
+('George Orwell'),           -- 10
+('J.K. Rowling'),            -- 11
+('Ernest Hemingway'),        -- 12
+('Leo Tolstoy'),             -- 13
+('Fiódor Dostoyevski'),      -- 14
+('Mark Twain'),              -- 15
+('J.R.R. Tolkien'),          -- 16
+('Agatha Christie'),         -- 17
+('H.P. Lovecraft'),          -- 18
+('Oscar Wilde'),             -- 19
+('Charles Dickens'),         -- 20
+('Stephen King'),            -- 21
+('Isabel Allende'),          -- 22
+('Haruki Murakami'),         -- 23
+('Neil Gaiman'),             -- 24
+('Brandon Sanderson'),       -- 25
+('Aldous Huxley'),           -- 26
+('Ursula K. Le Guin'),       -- 27
+('Philip K. Dick'),          -- 28
+('Edgar Allan Poe'),         -- 29
+('Julio Cortázar');          -- 30
+
+-- =========================================
+-- CATEGORÍAS (10 en total)
+-- =========================================
+INSERT INTO Categoria (nombre) VALUES
+('Ficción Clásica'),        -- 1
+('No Ficción'),             -- 2
+('Ciencia'),                -- 3
+('Historia'),               -- 4
+('Tecnología'),             -- 5
+('Fantasía'),               -- 6
+('Ciencia Ficción'),        -- 7
+('Misterio'),               -- 8
+('Biografía'),              -- 9
+('Desarrollo Personal');    -- 10
+
+-- =========================================
+-- LIBROS (75 en total)
+-- =========================================
+INSERT INTO Libro (titulo, stock, autorId, categoriaId) VALUES
+('Cien años de soledad', 25, 1, 1),
+('Don Quijote de la Mancha', 20, 2, 1),
+('El Principito', 15, 3, 1),
+('La Odisea', 10, 4, 4),
+('Orgullo y Prejuicio', 18, 5, 1),
+('Breve historia del tiempo', 12, 6, 3),
+('Fundación', 30, 7, 7),
+('Sapiens: De animales a dioses', 22, 8, 2),
+('Frankenstein', 15, 9, 1),
+('1984', 20, 10, 1),
+('El mundo y sus demonios', 15, 6, 3),
+('Yo, Robot', 25, 7, 7),
+('Homo Deus', 18, 8, 2),
+('Animal Farm', 14, 10, 1),
+('Ensayo sobre la ceguera', 12, 1, 1),
+('Harry Potter y la piedra filosofal', 50, 11, 6),
+('El viejo y el mar', 18, 12, 1),
+('Guerra y Paz', 12, 13, 4),
+('Crimen y castigo', 15, 14, 1),
+('Las aventuras de Tom Sawyer', 20, 15, 1),
+('El Señor de los Anillos: La Comunidad', 40, 16, 6),
+('Asesinato en el Orient Express', 25, 17, 8),
+('La llamada de Cthulhu', 10, 18, 8),
+('El retrato de Dorian Gray', 16, 19, 1),
+('Oliver Twist', 14, 20, 1),
+('It (Eso)', 20, 21, 8),
+('La casa de los espíritus', 18, 22, 1),
+('Tokio Blues', 15, 23, 1),
+('American Gods', 22, 24, 6),
+('Elantris', 30, 25, 6),
+('Un mundo feliz', 20, 26, 7),
+('Un mago de Terramar', 15, 27, 6),
+('¿Sueñan los androides con ovejas eléctricas?', 18, 28, 7),
+('El cuervo', 10, 29, 1),
+('Rayuela', 15, 30, 1),
+('El resplandor', 20, 21, 8),
+('De amor y de sombra', 15, 22, 1),
+('Kafka en la orilla', 14, 23, 1),
+('Stardust', 18, 24, 6),
+('El imperio final', 35, 25, 6),
+('La isla', 12, 26, 7),
+('La mano izquierda de la oscuridad', 16, 27, 7),
+('Ubik', 14, 28, 7),
+('Los crímenes de la calle Morgue', 15, 29, 8),
+('Bestiario', 12, 30, 1),
+('Harry Potter y la cámara secreta', 50, 11, 6),
+('El Señor de los Anillos: Las dos torres', 40, 16, 6),
+('Diez negritos', 25, 17, 8),
+('Cementerio de animales', 20, 21, 8),
+('El pozo de la ascensión', 35, 25, 6),
+('Harry Potter y el prisionero de Azkaban', 50, 11, 6),
+('El Señor de los Anillos: El retorno del Rey', 40, 16, 6),
+('El héroe de las eras', 35, 25, 6),
+('El nombre del viento', 30, 25, 6), -- Usando a Sanderson como placeholder de autor
+('Duna', 25, 28, 7), -- Usando a Dick como placeholder
+('Juego de Tronos', 30, 16, 6), -- Usando a Tolkien como placeholder
+('Steve Jobs', 15, 8, 9), -- Usando a Harari como placeholder
+('Hábitos Atómicos', 20, 8, 10), -- Usando a Harari como placeholder
+('El poder del ahora', 15, 8, 10), -- Usando a Harari como placeholder
+('Breves respuestas a las grandes preguntas', 18, 6, 3),
+('Cosmos', 15, 6, 3),
+('21 Lecciones para el siglo XXI', 20, 8, 2),
+('Contacto', 15, 6, 7),
+('Danza de Dragones', 30, 16, 6), -- Usando a Tolkien como placeholder
+('Neuromante', 18, 28, 7), -- Usando a Dick como placeholder
+('El temor de un hombre sabio', 30, 25, 6), -- Usando a Sanderson como placeholder
+('Criptonomicón', 15, 7, 5), -- Usando a Asimov como placeholder
+('El problema de los tres cuerpos', 20, 7, 7), -- Usando a Asimov como placeholder
+('Los juegos del hambre', 25, 11, 7), -- Usando a Rowling como placeholder
+('Divergente', 25, 11, 7), -- Usando a Rowling como placeholder
+('El código Da Vinci', 20, 17, 8), -- Usando a Christie como placeholder
+('Ángeles y Demonios', 20, 17, 8), -- Usando a Christie como placeholder
+('El alquimista', 15, 22, 10), -- Usando a Allende como placeholder
+('Guía del autoestopista galáctico', 20, 24, 7); -- Usando a Gaiman como placeholder
+
+-- =========================================
+-- CLIENTES (¡AHORA SÍ, 50 en total!)
+-- =========================================
+INSERT INTO Cliente (nombre, email, telefono, estado, createdAt) VALUES
+('Juan Pérez', 'juanperez@example.com', '1123456789', true, NOW()),
+('María López', 'marialopez@example.com', '1134567890', true, NOW()),
+('Carlos Díaz', 'carlosdiaz@example.com', '1145678901', true, NOW()),
+('Lucía Fernández', 'luciafernandez@example.com', '1156789012', true, NOW()),
+('Sofía Romero', 'sofiaromero@example.com', '1167890123', false, NOW()),
+('Martín Herrera', 'martinherrera@example.com', '1178901234', true, NOW()),
+('Camila Torres', 'camilatorres@example.com', '1189012345', true, NOW()),
+('Andrés Castro', 'andrescastro@example.com', '1190123456', true, NOW()),
+('Valentina Molina', 'valentinamolina@example.com', '1101234567', false, NOW()),
+('Diego Suárez', 'diegosuarez@example.com', '1112345678', true, NOW()),
+('Nicolás Giménez', 'nicolasgimenez@example.com', '1123456790', true, NOW()),
+('Julieta Cabrera', 'julietacabrera@example.com', '1134567801', true, NOW()),
+('Fernando Ruiz', 'fernandoruiz@example.com', '1145678912', false, NOW()),
+('Carolina Bustos', 'carolinabustos@example.com', '1156789023', true, NOW()),
+('Ricardo Benítez', 'ricardobenitez@example.com', '1167890134', true, NOW()),
+('Ana Acosta', 'anaacosta@example.com', '1178901245', true, NOW()),
+('Bruno Valdez', 'brunovaldez@example.com', '1189012356', true, NOW()),
+('Clara Sosa', 'clarasosa@example.com', '1190123467', true, NOW()),
+('Damián Ríos', 'damianrios@example.com', '1101234578', true, NOW()),
+('Elena Ponce', 'elenaponce@example.com', '1112345689', true, NOW()),
+('Facundo Morales', 'facundomorales@example.com', '1123456701', true, NOW()),
+('Gabriela Medina', 'gabrielamedina@example.com', '1134567812', false, NOW()),
+('Hugo Chávez', 'hugochavez@example.com', '1145678923', true, NOW()),
+('Irene Núñez', 'irenenunez@example.com', '1156789034', true, NOW()),
+('Javier Ortiz', 'javierortiz@example.com', '1167890145', true, NOW()),
+('Karina Paez', 'karinapaez@example.com', '1178901256', true, NOW()),
+('Leandro Villalba', 'leandrovillalba@example.com', '1189012367', true, NOW()),
+('Marisol Flores', 'marisolflores@example.com', '1190123478', true, NOW()),
+('Maximiliano Vega', 'maximilianovega@example.com', '1101234589', true, NOW()),
+('Nora Castillo', 'noracastillo@example.com', '1112345690', false, NOW()),
+('Oscar Rojas', 'oscarrojas@example.com', '1123456702', true, NOW()),
+('Paula Silva', 'paulasilva@example.com', '1134567813', true, NOW()),
+('Quintín Quiroga', 'quintinquiroga@example.com', '1145678924', true, NOW()),
+('Rocío Campos', 'rociocampos@example.com', '1156789035', true, NOW()),
+('Santiago Luna', 'santiagoluna@example.com', '1167890146', true, NOW()),
+('Tatiana Ibarra', 'tatianaibarra@example.com', '1178901257', true, NOW()),
+('Ulises Ponce', 'ulisesponce@example.com', '1189012368', true, NOW()),
+('Verónica Gómez', 'veronicagomez@example.com', '1190123479', true, NOW()),
+('Walter Pardo', 'walterpardo@example.com', '1101234590', true, NOW()),
+('Ximena Zúñiga', 'ximenazuniga@example.com', '1112345601', true, NOW()),
+('Yanina Zarza', 'yaninazarza@example.com', '1123456712', false, NOW()),
+('Zacarías Bravo', 'zacariasbravo@example.com', '1134567823', true, NOW()),
+('Alicia Ramírez', 'aliciaramirez@example.com', '1145678934', true, NOW()),
+('Benjamín Alonso', 'benjaminalonso@example.com', '1156789045', true, NOW()),
+('Celeste Juárez', 'celestejuarez@example.com', '1167890156', true, NOW()),
+('David Muñoz', 'davidmunoz@example.com', '1178901267', true, NOW()),
+('Esteban Navarro', 'estebannavarro@example.com', '1189012378', true, NOW()),
+('Florencia Peña', 'florenciapena@example.com', '1190123489', true, NOW()),
+('Gastón Roldán', 'gastonroldan@example.com', '1101234500', true, NOW()),
+('Héctor Sosa', 'hectorsosa@example.com', '1101234501', true, NOW()); -- CLIENTE 50 (EL QUE FALTABA)
+
+-- =========================================
+-- EMPLEADOS (8 en total)
+-- =========================================
+INSERT INTO Empleado (nombre, apellido, email, telefono, puesto) VALUES
+('Laura', 'Méndez', 'laura.mendez@example.com', '1123456789', 'Bibliotecaria Principal'),
+('Pablo', 'Rojas', 'pablo.rojas@example.com', '1134567890', 'Administrador de Sistema'),
+('Natalia', 'Gómez', 'natalia.gomez@example.com', '1145678901', 'Asistente de Préstamos'),
+('Diego', 'Martínez', 'diego.martinez@example.com', '1156789012', 'Encargado de Devoluciones'),
+('Mónica', 'Bianchi', 'monica.bianchi@example.com', '1167890123', 'Catalogadora'),
+('Rodrigo', 'Sáenz', 'rodrigo.saenz@example.com', '1178901234', 'Atención al Cliente'),
+('Valeria', 'Campos', 'valeria.campos@example.com', '1189012345', 'Atención al Cliente'),
+('Hernán', 'Solari', 'hernan.solari@example.com', '1190123456', 'Administrador Nocturno');
+
+-- =========================================
+-- PRÉSTAMOS (315 registros)
+-- =========================================
+
+use biblioteca;
+INSERT INTO Prestamo (fecha, devuelto, clienteId, libroId, empleadoId) VALUES
+-- Ráfaga Libro 16 (Harry Potter 1)
+('2025-01-10', true, 1, 16, 1), -- id 1
+('2025-01-11', true, 2, 16, 2), -- id 2
+('2025-01-12', true, 3, 16, 3), -- id 3
+('2025-01-13', false, 4, 16, 4), -- id 4
+('2025-01-14', true, 5, 16, 5), -- id 5
+('2025-01-15', true, 10, 16, 6), -- id 6
+('2025-01-16', true, 15, 16, 7), -- id 7
+('2025-01-17', true, 20, 16, 8), -- id 8
+('2025-01-18', true, 25, 16, 1), -- id 9
+('2025-01-19', false, 30, 16, 2), -- id 10
+('2025-01-20', true, 35, 16, 3), -- id 11
+('2025-01-21', true, 40, 16, 4), -- id 12
+('2025-01-22', true, 45, 16, 5), -- id 13
+('2025-01-23', true, 50, 16, 6), -- id 14
+('2025-02-01', true, 1, 21, 1), -- id 15
+('2025-02-02', true, 3, 21, 2), -- id 16
+('2025-02-03', true, 5, 21, 3), -- id 17
+('2025-02-04', false, 7, 21, 4), -- id 18
+('2025-02-05', true, 9, 21, 5), -- id 19
+('2025-02-06', true, 11, 21, 6), -- id 20
+('2025-02-07', true, 13, 21, 7), -- id 21
+('2025-02-08', true, 15, 21, 8), -- id 22
+('2025-02-09', true, 17, 21, 1), -- id 23
+('2025-02-10', false, 19, 21, 2), -- id 24
+('2025-02-11', true, 21, 21, 3), -- id 25
+('2025-02-12', true, 23, 21, 4), -- id 26
+('2025-02-13', true, 25, 21, 5), -- id 27
+('2025-02-14', true, 27, 21, 6), -- id 28
+('2025-02-15', true, 2, 1, 1), -- id 29
+('2025-02-16', true, 4, 1, 2), -- id 30
+('2025-02-17', true, 6, 1, 3), -- id 31
+('2025-02-18', true, 8, 1, 4), -- id 32
+('2025-02-19', true, 10, 1, 5), -- id 33
+('2025-02-20', false, 12, 1, 6), -- id 34
+('2025-02-21', true, 14, 1, 7), -- id 35
+('2025-02-22', true, 16, 1, 8), -- id 36
+('2025-02-23', true, 18, 1, 1), -- id 37
+('2025-02-24', true, 20, 1, 2), -- id 38
+('2025-02-25', false, 22, 1, 3), -- id 39
+('2025-02-26', true, 24, 1, 4), -- id 40
+('2025-03-01', true, 1, 7, 5), -- id 41
+('2025-03-02', true, 10, 7, 6), -- id 42
+('2025-03-03', true, 20, 7, 7), -- id 43
+('2025-03-04', false, 30, 7, 8), -- id 44
+('2025-03-05', true, 40, 7, 1), -- id 45
+('2025-03-06', true, 50, 7, 2), -- id 46
+('2025-03-07', true, 5, 7, 3), -- id 47
+('2025-03-08', true, 15, 7, 4), -- id 48
+('2025-03-09', true, 25, 7, 5), -- id 49
+('2025-03-10', true, 1, 46, 1), -- id 50
+('2025-03-11', true, 2, 46, 2), -- id 51
+('2025-03-12', true, 3, 46, 3), -- id 52
+('2025-03-13', false, 4, 46, 4), -- id 53
+('2025-03-14', true, 5, 46, 5), -- id 54
+('2025-03-15', true, 10, 46, 6), -- id 55
+('2025-03-16', true, 15, 46, 7), -- id 56
+('2025-03-17', true, 20, 46, 8), -- id 57
+('2025-03-18', true, 25, 46, 1), -- id 58
+('2025-03-19', false, 30, 46, 2), -- id 59
+('2025-03-20', true, 35, 46, 3), -- id 60
+('2025-03-21', true, 40, 46, 4), -- id 61
+('2025-03-22', true, 45, 46, 5), -- id 62
+('2025-04-01', true, 1, 47, 1), -- id 63
+('2025-04-02', true, 3, 47, 2), -- id 64
+('2025-04-03', true, 5, 47, 3), -- id 65
+('2025-04-04', false, 7, 47, 4), -- id 66
+('2025-04-05', true, 9, 47, 5), -- id 67
+('2025-04-06', true, 11, 47, 6), -- id 68
+('2025-04-07', true, 13, 47, 7), -- id 69
+('2025-04-08', true, 15, 47, 8), -- id 70
+('2025-04-09', true, 17, 47, 1), -- id 71
+('2025-04-10', false, 19, 47, 2), -- id 72
+('2025-04-11', true, 21, 47, 3), -- id 73
+('2025-04-12', true, 23, 47, 4), -- id 74
+('2025-04-13', true, 25, 47, 5), -- id 75
+('2025-04-14', true, 27, 47, 6), -- id 76
+('2025-04-15', true, 2, 8, 1), -- id 77
+('2025-04-16', true, 4, 8, 2), -- id 78
+('2025-04-17', true, 6, 8, 3), -- id 79
+('2025-04-18', true, 8, 8, 4), -- id 80
+('2025-04-19', true, 10, 8, 5), -- id 81
+('2025-04-20', false, 12, 8, 6), -- id 82
+('2025-04-21', true, 14, 8, 7), -- id 83
+('2025-04-22', true, 16, 8, 8), -- id 84
+('2025-04-23', true, 18, 8, 1), -- id 85
+('2025-04-24', true, 20, 8, 2), -- id 86
+('2025-04-25', false, 22, 8, 3), -- id 87
+('2025-04-26', true, 24, 8, 4), -- id 88
+('2025-05-01', true, 1, 12, 5), -- id 89
+('2025-05-02', true, 10, 12, 6), -- id 90
+('2025-05-03', true, 20, 12, 7), -- id 91
+('2025-05-04', false, 30, 12, 8), -- id 92
+('2025-05-05', true, 40, 12, 1), -- id 93
+('2025-05-06', true, 50, 12, 2), -- id 94
+('2025-05-07', true, 5, 12, 3), -- id 95
+('2025-05-08', true, 15, 12, 4), -- id 96
+('2025-05-09', true, 25, 12, 5), -- id 97
+('2025-05-10', true, 1, 40, 1), -- id 98
+('2025-05-11', true, 2, 40, 2), -- id 99
+('2025-05-12', true, 3, 40, 3), -- id 100
+('2025-05-13', false, 4, 40, 4), -- id 101
+('2025-05-14', true, 5, 40, 5), -- id 102
+('2025-05-15', true, 10, 40, 6), -- id 103
+('2025-05-16', true, 15, 40, 7), -- id 104
+('2025-05-17', true, 20, 40, 8), -- id 105
+('2025-05-18', true, 25, 40, 1), -- id 106
+('2025-05-19', false, 30, 40, 2), -- id 107
+('2025-05-20', true, 35, 40, 3), -- id 108
+('2025-05-21', true, 40, 40, 4), -- id 109
+('2025-05-22', true, 45, 40, 5), -- id 110
+('2025-05-23', true, 1, 2, 1), -- id 111
+('2025-05-24', true, 2, 3, 2), -- id 112
+('2025-05-25', false, 3, 4, 3), -- id 113
+('2025-05-26', true, 4, 5, 4), -- id 114
+('2025-05-27', true, 5, 6, 5), -- id 115
+('2025-05-28', true, 6, 9, 6), -- id 116
+('2025-05-29', true, 7, 10, 7), -- id 117
+('2025-05-30', false, 8, 11, 8), -- id 118
+('2025-05-31', true, 9, 13, 1), -- id 119
+('2025-06-01', true, 10, 14, 2), -- id 120
+('2025-06-02', true, 11, 15, 3), -- id 121
+('2025-06-03', true, 12, 17, 4), -- id 122
+('2025-06-04', false, 13, 18, 5), -- id 123
+('2025-06-05', true, 14, 19, 6), -- id 124
+('2025-06-06', true, 15, 20, 7), -- id 125
+('2025-06-07', true, 16, 22, 8), -- id 126
+('2025-06-08', true, 17, 23, 1), -- id 127
+('2025-06-09', false, 18, 24, 2), -- id 128
+('2025-06-10', true, 19, 25, 3), -- id 129
+('2025-06-11', true, 20, 26, 4), -- id 130
+('2025-06-12', true, 21, 27, 5), -- id 131
+('2025-06-13', true, 22, 28, 6), -- id 132
+('2025-06-14', false, 23, 29, 7), -- id 133
+('2025-06-15', true, 24, 30, 8), -- id 134
+('2025-06-16', true, 25, 31, 1), -- id 135
+('2025-06-17', true, 26, 32, 2), -- id 136
+('2025-06-18', true, 27, 33, 3), -- id 137
+('2025-06-19', false, 28, 34, 4), -- id 138
+('2025-06-20', true, 29, 35, 5), -- id 139
+('2025-06-21', true, 30, 36, 6), -- id 140
+('2025-06-22', true, 31, 37, 7), -- id 141
+('2025-06-23', true, 32, 38, 8), -- id 142
+('2025-06-24', false, 33, 39, 1), -- id 143
+('2025-06-25', true, 34, 41, 2), -- id 144
+('2025-06-26', true, 35, 42, 3), -- id 145
+('2025-06-27', true, 36, 43, 4), -- id 146
+('2025-06-28', true, 37, 44, 5), -- id 147
+('2025-06-29', false, 38, 45, 6), -- id 148
+('2025-06-30', true, 39, 48, 7), -- id 149
+('2025-07-01', true, 40, 49, 8), -- id 150
+('2025-07-02', true, 41, 50, 1), -- id 151
+('2025-07-03', true, 42, 51, 2), -- id 152
+('2025-07-04', false, 43, 52, 3), -- id 153
+('2025-07-05', true, 44, 53, 4), -- id 154
+('2025-07-06', true, 45, 54, 5), -- id 155
+('2025-07-07', true, 46, 55, 6), -- id 156
+('2025-07-08', true, 47, 56, 7), -- id 157
+('2025-07-09', false, 48, 57, 8), -- id 158
+('2025-07-10', true, 49, 58, 1), -- id 159
+('2025-07-11', true, 50, 59, 2), -- id 160
+('2025-07-12', true, 1, 16, 3), -- id 161
+('2025-07-13', true, 5, 16, 4), -- id 162
+('2025-07-14', true, 10, 16, 5), -- id 163
+('2025-07-15', true, 15, 16, 6), -- id 164
+('2025-07-16', true, 20, 16, 7), -- id 165
+('2025-07-17', true, 25, 16, 8), -- id 166
+('2025-07-18', true, 30, 16, 1), -- id 167
+('2025-07-19', false, 35, 16, 2), -- id 168
+('2025-07-20', true, 40, 16, 3), -- id 169
+('2025-07-21', true, 45, 16, 4), -- id 170
+('2025-07-22', true, 50, 16, 5), -- id 171
+('2025-07-23', true, 3, 16, 6), -- id 172
+('2025-07-24', true, 7, 16, 7), -- id 173
+('2025-07-25', false, 9, 16, 8), -- id 174
+('2025-07-26', true, 2, 21, 1), -- id 175
+('2025-07-27', true, 4, 21, 2), -- id 176
+('2025-07-28', true, 6, 21, 3), -- id 177
+('2025-07-29', true, 8, 21, 4), -- id 178
+('2025-07-30', true, 12, 21, 5), -- id 179
+('2025-07-31', true, 14, 21, 6), -- id 180
+('2025-08-01', false, 16, 21, 7), -- id 181
+('2025-08-02', true, 18, 21, 8), -- id 182
+('2025-08-03', true, 22, 21, 1), -- id 183
+('2025-08-04', true, 24, 21, 2), -- id 184
+('2025-08-05', true, 26, 21, 3), -- id 185
+('2025-08-06', true, 28, 21, 4), -- id 186
+('2025-08-07', false, 30, 21, 5), -- id 187
+('2025-08-08', true, 32, 21, 6), -- id 188
+('2025-08-09', true, 1, 1, 7), -- id 189
+('2025-08-10', true, 3, 1, 8), -- id 190
+('2025-08-11', true, 5, 1, 1), -- id 191
+('2025-08-12', true, 7, 1, 2), -- id 192
+('2025-08-13', true, 9, 1, 3), -- id 193
+('2025-08-14', false, 11, 1, 4), -- id 194
+('2025-08-15', true, 13, 1, 5), -- id 195
+('2025-08-16', true, 15, 1, 6), -- id 196
+('2025-08-17', true, 17, 1, 7), -- id 197
+('2025-08-18', true, 19, 1, 8), -- id 198
+('2025-08-19', false, 21, 1, 1), -- id 199
+('2025-08-20', true, 23, 1, 2), -- id 200
+('2025-08-21', true, 1, 51, 1), -- id 201
+('2025-08-22', true, 2, 51, 2), -- id 202
+('2025-08-23', true, 3, 51, 3), -- id 203
+('2025-08-24', false, 4, 51, 4), -- id 204
+('2025-08-25', true, 5, 51, 5), -- id 205
+('2025-08-26', true, 10, 51, 6), -- id 206
+('2025-08-27', true, 15, 51, 7), -- id 207
+('2025-08-28', true, 20, 51, 8), -- id 208
+('2025-08-29', true, 25, 51, 1), -- id 209
+('2025-08-30', false, 30, 51, 2), -- id 210
+('2025-08-31', true, 35, 51, 3), -- id 211
+('2025-09-01', true, 40, 51, 4), -- id 212
+('2025-09-02', true, 45, 51, 5), -- id 213
+('2025-09-03', true, 1, 52, 1), -- id 214
+('2025-09-04', true, 3, 52, 2), -- id 215
+('2025-09-05', true, 5, 52, 3), -- id 216
+('2025-09-06', false, 7, 52, 4), -- id 217
+('2025-09-07', true, 9, 52, 5), -- id 218
+('2025-09-08', true, 11, 52, 6), -- id 219
+('2025-09-09', true, 13, 52, 7), -- id 220
+('2025-09-10', true, 15, 52, 8), -- id 221
+('2025-09-11', true, 17, 52, 1), -- id 222
+('2025-09-12', false, 19, 52, 2), -- id 223
+('2025-09-13', true, 21, 52, 3), -- id 224
+('2025-09-14', true, 23, 52, 4), -- id 225
+('2025-09-15', true, 25, 52, 5), -- id 226
+('2025-09-16', true, 27, 52, 6), -- id 227
+('2025-09-17', true, 2, 58, 1), -- id 228
+('2025-09-18', true, 4, 58, 2), -- id 229
+('2025-09-19', true, 6, 58, 3), -- id 230
+('2025-09-20', true, 8, 58, 4), -- id 231
+('2025-09-21', true, 10, 58, 5), -- id 232
+('2025-09-22', false, 12, 58, 6), -- id 233
+('2025-09-23', true, 14, 58, 7), -- id 234
+('2025-09-24', true, 16, 58, 8), -- id 235
+('2025-09-25', true, 18, 58, 1), -- id 236
+('2025-09-26', true, 20, 58, 2), -- id 237
+('2025-09-27', false, 22, 58, 3), -- id 238
+('2025-09-28', true, 24, 58, 4), -- id 239
+('2025-10-01', true, 1, 26, 5), -- id 240
+('2025-10-02', true, 10, 26, 6), -- id 241
+('2025-10-03', true, 20, 26, 7), -- id 242
+('2025-10-04', false, 30, 26, 8), -- id 243
+('2025-10-05', true, 40, 26, 1), -- id 244
+('2025-10-06', true, 50, 26, 2), -- id 245
+('2025-10-07', true, 5, 26, 3), -- id 246
+('2025-10-08', true, 15, 26, 4), -- id 247
+('2025-10-09', true, 25, 26, 5), -- id 248
+('2025-10-10', true, 1, 22, 1), -- id 249
+('2025-10-11', true, 2, 22, 2), -- id 250
+('2025-10-12', true, 3, 22, 3), -- id 251
+('2025-10-13', false, 4, 22, 4), -- id 252
+('2025-10-14', true, 5, 22, 5), -- id 253
+('2025-10-15', true, 10, 22, 6), -- id 254
+('2025-10-16', true, 15, 22, 7), -- id 255
+('2025-10-17', true, 20, 22, 8), -- id 256
+('2025-10-18', true, 25, 22, 1), -- id 257
+('2025-10-19', false, 30, 22, 2), -- id 258
+('2025-10-20', true, 35, 22, 3), -- id 259
+('2025-10-21', true, 40, 22, 4), -- id 260
+('2025-10-22', true, 45, 22, 5), -- id 261
+('2025-11-01', true, 1, 54, 1), -- id 262
+('2025-11-02', true, 3, 54, 2), -- id 263
+('2025-11-03', true, 5, 54, 3), -- id 264
+('2025-11-04', false, 7, 54, 4), -- id 265
+('2025-11-05', true, 9, 54, 5), -- id 266
+('2025-11-06', true, 11, 54, 6), -- id 267
+('2025-11-07', true, 13, 54, 7), -- id 268
+('2025-11-08', true, 15, 54, 8), -- id 269
+('2025-11-09', true, 17, 54, 1), -- id 270
+('2025-11-10', false, 19, 54, 2), -- id 271
+('2025-11-11', true, 21, 54, 3), -- id 272
+('2025-11-12', true, 23, 54, 4), -- id 273
+('2025-11-13', true, 25, 54, 5), -- id 274
+('2025-11-14', true, 27, 54, 6), -- id 275
+('2025-11-15', true, 1, 60, 1), -- id 276
+('2025-11-16', true, 2, 61, 2), -- id 277
+('2025-11-17', false, 3, 62, 3), -- id 278
+('2025-11-18', true, 4, 63, 4), -- id 279
+('2025-11-19', true, 5, 64, 5), -- id 280
+('2025-11-20', true, 6, 65, 6), -- id 281
+('2025-11-21', true, 7, 66, 7), -- id 282
+('2025-11-22', false, 8, 67, 8), -- id 283
+('2025-11-23', true, 9, 68, 1), -- id 284
+('2025-11-24', true, 10, 69, 2), -- id 285
+('2025-11-25', true, 11, 70, 3), -- id 286
+('2025-11-26', true, 12, 71, 4), -- id 287
+('2025-11-27', false, 13, 72, 5), -- id 288
+('2025-11-28', true, 14, 73, 6), -- id 289
+('2025-11-29', true, 15, 74, 7), -- id 290
+('2025-11-30', true, 16, 74, 8), -- id 291
+('2025-12-01', true, 17, 39, 1), -- id 292
+('2025-12-02', false, 18, 38, 2), -- id 293
+('2025-12-03', true, 19, 37, 3), -- id 294
+('2025-12-04', true, 20, 36, 4), -- id 295
+('2025-12-05', true, 21, 35, 5), -- id 296
+('2025-12-06', true, 22, 34, 6), -- id 297
+('2025-12-07', false, 23, 33, 7), -- id 298
+('2025-12-08', true, 24, 32, 8), -- id 299
+('2025-12-09', true, 25, 31, 1), -- id 300
+('2025-12-10', true, 26, 30, 2), -- id 301
+('2025-12-11', true, 27, 29, 3), -- id 302
+('2025-12-12', false, 28, 28, 4), -- id 303
+('2025-12-13', true, 29, 27, 5), -- id 304
+('2025-12-14', true, 30, 26, 6), -- id 305
+('2025-12-15', true, 31, 25, 7), -- id 306
+('2025-12-16', true, 32, 24, 8), -- id 307
+('2025-12-17', false, 33, 23, 1), -- id 308
+('2025-12-18', true, 34, 20, 2), -- id 309
+('2025-12-19', true, 35, 19, 3), -- id 310
+('2025-12-20', true, 36, 18, 4), -- id 311
+('2025-12-21', true, 37, 17, 5), -- id 312
+('2025-12-22', false, 38, 15, 6), -- id 313
+('2025-12-23', true, 39, 14, 7), -- id 314
+('2025-12-24', true, 40, 13, 8); -- id 315
+
+-- =========================================
+-- DEVOLUCIONES (para los préstamos devueltos)
+-- =========================================
+use biblioteca;
+INSERT INTO Devolucion (prestamoId, fecha, observacion) VALUES
+(1, '2025-01-17', 'Buen estado'),
+(2, '2025-01-18', 'Páginas dobladas'),
+(3, '2025-01-19', 'Sin observaciones'),
+(5, '2025-01-21', 'Perfecto estado'),
+(6, '2025-01-22', NULL),
+(7, '2025-01-23', 'Leve desgaste'),
+(8, '2025-01-24', 'Cubierta con marcas'),
+(9, '2025-01-25', 'Buen estado'),
+(11, '2025-01-27', NULL),
+(12, '2025-01-28', 'Sin observaciones'),
+(13, '2025-01-29', 'Perfecto estado'),
+(14, '2025-01-30', 'Buen estado'),
+(15, '2025-02-08', 'Leve olor a humedad'),
+(16, '2025-02-09', 'Sin observaciones'),
+(17, '2025-02-10', 'Páginas dobladas'),
+(19, '2025-02-12', 'Buen estado'),
+(20, '2025-02-13', NULL),
+(21, '2025-02-14', 'Perfecto estado'),
+(22, '2025-02-15', 'Sin observaciones'),
+(23, '2025-02-16', 'Buen estado'),
+(25, '2025-02-18', 'Leve desgaste'),
+(26, '2025-02-19', NULL),
+(27, '2025-02-20', 'Páginas dobladas'),
+(28, '2025-02-21', 'Buen estado'),
+(29, '2025-02-22', 'Sin observaciones'),
+(30, '2025-02-23', 'Perfecto estado'),
+(31, '2025-02-24', 'Cubierta con marcas'),
+(32, '2025-02-25', NULL),
+(33, '2025-02-26', 'Buen estado'),
+(35, '2025-02-28', 'Sin observaciones'),
+(36, '2025-03-01', 'Páginas dobladas'),
+(37, '2025-03-02', 'Buen estado'),
+(38, '2025-03-03', 'Perfecto estado'),
+(40, '2025-03-05', 'Leve desgaste'),
+(41, '2025-03-08', 'Sin observaciones'),
+(42, '2025-03-09', 'Buen estado'),
+(43, '2025-03-10', NULL),
+(45, '2025-03-12', 'Perfecto estado'),
+(46, '2025-03-13', 'Páginas dobladas'),
+(47, '2025-03-14', 'Buen estado'),
+(48, '2025-03-15', 'Sin observaciones'),
+(49, '2025-03-16', 'Cubierta con marcas'),
+(50, '2025-03-17', 'Buen estado'),
+(51, '2025-03-18', NULL),
+(52, '2025-03-19', 'Perfecto estado'),
+(54, '2025-03-21', 'Sin observaciones'),
+(55, '2025-03-22', 'Buen estado'),
+(56, '2025-03-23', 'Leve desgaste'),
+(57, '2025-03-24', 'Páginas dobladas'),
+(58, '2025-03-25', 'Sin observaciones'),
+(60, '2025-03-27', 'Buen estado'),
+(61, '2025-03-28', NULL),
+(62, '2025-03-29', 'Perfecto estado'),
+(63, '2025-04-08', 'Buen estado'),
+(64, '2025-04-09', 'Sin observaciones'),
+(65, '2025-04-10', 'Páginas dobladas'),
+(67, '2025-04-12', 'Buen estado'),
+(68, '2025-04-13', 'Perfecto estado'),
+(69, '2025-04-14', 'Sin observaciones'),
+(70, '2025-04-15', 'Cubierta con marcas'),
+(71, '2025-04-16', NULL),
+(73, '2025-04-18', 'Buen estado'),
+(74, '2025-04-19', 'Leve desgaste'),
+(75, '2025-04-20', 'Sin observaciones'),
+(76, '2025-04-21', 'Buen estado'),
+(77, '2025-04-22', 'Perfecto estado'),
+(78, '2025-04-23', NULL),
+(79, '2025-04-24', 'Páginas dobladas'),
+(80, '2025-04-25', 'Buen estado'),
+(81, '2025-04-26', 'Sin observaciones'),
+(83, '2025-04-28', 'Perfecto estado'),
+(84, '2025-04-29', 'Buen estado'),
+(85, '2025-04-30', 'Leve desgaste'),
+(86, '2025-05-01', NULL),
+(88, '2025-05-03', 'Buen estado'),
+(89, '2025-05-08', 'Sin observaciones'),
+(90, '2025-05-09', 'Páginas dobladas'),
+(91, '2025-05-10', 'Buen estado'),
+(93, '2025-05-12', 'Perfecto estado'),
+(94, '2025-05-13', NULL),
+(95, '2025-05-14', 'Sin observaciones'),
+(96, '2025-05-15', 'Buen estado'),
+(97, '2025-05-16', 'Cubierta con marcas'),
+(98, '2025-05-17', 'Buen estado'),
+(99, '2025-05-18', 'Perfecto estado'),
+(100, '2025-05-19', 'Sin observaciones'),
+(102, '2025-05-21', 'Páginas dobladas'),
+(103, '2025-05-22', NULL),
+(104, '2025-05-23', 'Buen estado'),
+(105, '2025-05-24', 'Leve desgaste'),
+(106, '2025-05-25', 'Sin observaciones'),
+(108, '2025-05-27', 'Buen estado'),
+(109, '2025-05-28', 'Perfecto estado'),
+(110, '2025-05-29', NULL),
+(111, '2025-05-30', 'Sin observaciones'),
+(112, '2025-05-31', 'Buen estado'),
+(114, '2025-06-02', 'Páginas dobladas'),
+(115, '2025-06-03', 'Perfecto estado'),
+(116, '2025-06-04', 'Buen estado'),
+(117, '2025-06-05', 'Sin observaciones'),
+(119, '2025-06-07', 'Cubierta con marcas'),
+(120, '2025-06-08', 'Buen estado'),
+(121, '2025-06-09', NULL),
+(122, '2025-06-10', 'Perfecto estado'),
+(124, '2025-06-12', 'Sin observaciones'),
+(125, '2025-06-13', 'Buen estado'),
+(126, '2025-06-14', 'Leve desgaste'),
+(127, '2025-06-15', 'Páginas dobladas'),
+(129, '2025-06-17', 'Buen estado'),
+(130, '2025-06-18', 'Sin observaciones'),
+(131, '2025-06-19', 'Perfecto estado'),
+(132, '2025-06-20', 'Buen estado'),
+(134, '2025-06-22', NULL),
+(135, '2025-06-23', 'Sin observaciones'),
+(136, '2025-06-24', 'Cubierta con marcas'),
+(137, '2025-06-25', 'Buen estado'),
+(139, '2025-06-27', 'Perfecto estado'),
+(140, '2025-06-28', 'Sin observaciones'),
+(141, '2025-06-29', 'Buen estado'),
+(142, '2025-06-30', 'Páginas dobladas'),
+(144, '2025-07-02', 'Buen estado'),
+(145, '2025-07-03', 'Leve desgaste'),
+(146, '2025-07-04', 'Sin observaciones'),
+(147, '2025-07-05', 'Buen estado'),
+(149, '2025-07-07', 'Perfecto estado'),
+(150, '2025-07-08', NULL),
+(151, '2025-07-09', 'Sin observaciones'),
+(152, '2025-07-10', 'Buen estado'),
+(154, '2025-07-12', 'Páginas dobladas'),
+(155, '2025-07-13', 'Buen estado'),
+(156, '2025-07-14', 'Perfecto estado'),
+(157, '2025-07-15', 'Sin observaciones'),
+(159, '2025-07-17', 'Buen estado'),
+(160, '2025-07-18', 'Cubierta con marcas'),
+(161, '2025-07-19', 'Buen estado'),
+(162, '2025-07-20', 'Sin observaciones'),
+(163, '2025-07-21', 'Perfecto estado'),
+(164, '2025-07-22', 'Buen estado'),
+(165, '2025-07-23', 'Páginas dobladas'),
+(166, '2025-07-24', NULL),
+(167, '2025-07-25', 'Buen estado'),
+(169, '2025-07-27', 'Sin observaciones'),
+(170, '2025-07-28', 'Leve desgaste'),
+(171, '2025-07-29', 'Buen estado'),
+(172, '2025-07-30', 'Perfecto estado'),
+(173, '2025-07-31', 'Sin observaciones'),
+(175, '2025-08-02', 'Buen estado'),
+(176, '2025-08-03', 'Páginas dobladas'),
+(177, '2025-08-04', 'Sin observaciones'),
+(178, '2025-08-05', 'Perfecto estado'),
+(179, '2025-08-06', 'Buen estado'),
+(180, '2025-08-07', NULL),
+(182, '2025-08-09', 'Cubierta con marcas'),
+(183, '2025-08-10', 'Buen estado'),
+(184, '2025-08-11', 'Sin observaciones'),
+(185, '2025-08-12', 'Perfecto estado'),
+(186, '2025-08-13', 'Buen estado'),
+(188, '2025-08-15', 'Leve desgaste'),
+(189, '2025-08-16', 'Sin observaciones'),
+(190, '2025-08-17', 'Buen estado'),
+(191, '2025-08-18', 'Páginas dobladas'),
+(192, '2025-08-19', 'Perfecto estado'),
+(193, '2025-08-20', 'Buen estado'),
+(195, '2025-08-22', 'Sin observaciones'),
+(196, '2025-08-23', 'Buen estado'),
+(197, '2025-08-24', 'Cubierta con marcas'),
+(198, '2025-08-25', NULL),
+(200, '2025-08-27', 'Buen estado'),
+(201, '2025-08-28', 'Perfecto estado'),
+(202, '2025-08-29', 'Sin observaciones'),
+(203, '2025-08-30', 'Buen estado'),
+(205, '2025-09-01', 'Páginas dobladas'),
+(206, '2025-09-02', 'Leve desgaste'),
+(207, '2025-09-03', 'Buen estado'),
+(208, '2025-09-04', 'Sin observaciones'),
+(209, '2025-09-05', 'Perfecto estado'),
+(211, '2025-09-07', 'Buen estado'),
+(212, '2025-09-08', NULL),
+(213, '2025-09-09', 'Sin observaciones'),
+(214, '2025-09-10', 'Buen estado'),
+(215, '2025-09-11', 'Páginas dobladas'),
+(216, '2025-09-12', 'Perfecto estado'),
+(218, '2025-09-14', 'Buen estado'),
+(219, '2025-09-15', 'Sin observaciones'),
+(220, '2025-09-16', 'Cubierta con marcas'),
+(221, '2025-09-17', 'Buen estado'),
+(222, '2025-09-18', 'Leve desgaste'),
+(224, '2025-09-20', 'Buen estado'),
+(225, '2025-09-21', 'Sin observaciones'),
+(226, '2025-09-22', 'Perfecto estado'),
+(227, '2025-09-23', 'Buen estado'),
+(228, '2025-09-24', 'Páginas dobladas'),
+(229, '2025-09-25', NULL),
+(230, '2025-09-26', 'Buen estado'),
+(231, '2025-09-27', 'Sin observaciones'),
+(232, '2025-09-28', 'Perfecto estado'),
+(234, '2025-09-30', 'Buen estado'),
+(235, '2025-10-01', 'Leve desgaste'),
+(236, '2025-10-02', 'Sin observaciones'),
+(237, '2025-10-03', 'Buen estado'),
+(239, '2025-10-05', 'Perfecto estado'),
+(240, '2025-10-08', 'Sin observaciones'),
+(241, '2025-10-09', 'Buen estado'),
+(242, '2025-10-10', 'Páginas dobladas'),
+(244, '2025-10-12', 'Buen estado'),
+(245, '2025-10-13', 'Cubierta con marcas'),
+(246, '2025-10-14', 'Sin observaciones'),
+(247, '2025-10-15', 'Buen estado'),
+(248, '2025-10-16', 'Perfecto estado'),
+(249, '2025-10-17', 'Buen estado'),
+(250, '2025-10-18', 'Leve desgaste'),
+(251, '2025-10-19', 'Sin observaciones'),
+(253, '2025-10-21', 'Buen estado'),
+(254, '2025-10-22', 'Páginas dobladas'),
+(255, '2025-10-23', NULL),
+(256, '2025-10-24', 'Buen estado'),
+(257, '2025-10-25', 'Sin observaciones'),
+(259, '2025-10-27', 'Perfecto estado'),
+(260, '2025-10-28', 'Buen estado'),
+(261, '2025-10-29', 'Cubierta con marcas'),
+(262, '2025-11-08', 'Sin observaciones'),
+(263, '2025-11-09', 'Buen estado'),
+(264, '2025-11-10', 'Perfecto estado'),
+(266, '2025-11-12', 'Páginas dobladas'),
+(267, '2025-11-13', 'Buen estado'),
+(268, '2025-11-14', 'Sin observaciones'),
+(269, '2025-11-15', 'Leve desgaste'),
+(270, '2025-11-16', 'Buen estado'),
+(272, '2025-11-18', 'Perfecto estado'),
+(273, '2025-11-19', NULL),
+(274, '2025-11-20', 'Buen estado'),
+(275, '2025-11-21', 'Sin observaciones'),
+(276, '2025-11-22', 'Buen estado'),
+(277, '2025-11-23', 'Páginas dobladas'),
+(279, '2025-11-25', 'Sin observaciones'),
+(280, '2025-11-26', 'Perfecto estado'),
+(281, '2025-11-27', 'Buen estado'),
+(282, '2025-11-28', 'Cubierta con marcas'),
+(284, '2025-11-30', 'Buen estado'),
+(285, '2025-12-01', 'Sin observaciones'),
+(286, '2025-12-02', 'Leve desgaste'),
+(287, '2025-12-03', 'Buen estado'),
+(289, '2025-12-05', 'Perfecto estado'),
+(290, '2025-12-06', 'Sin observaciones'),
+(291, '2025-12-07', 'Buen estado'),
+(292, '2025-12-08', 'Páginas dobladas'),
+(294, '2025-12-10', 'Buen estado'),
+(295, '2025-12-11', 'Sin observaciones'),
+(296, '2025-12-12', 'Perfecto estado'),
+(297, '2025-12-13', 'Buen estado'),
+(299, '2025-12-15', NULL),
+(300, '2025-12-16', 'Sin observaciones'),
+(301, '2025-12-17', 'Buen estado'),
+(302, '2025-12-18', 'Cubierta con marcas'),
+(304, '2025-12-20', 'Buen estado'),
+(305, '2025-12-21', 'Perfecto estado'),
+(306, '2025-12-22', 'Sin observaciones'),
+(307, '2025-12-23', 'Buen estado'),
+(309, '2025-12-25', 'Páginas dobladas'),
+(310, '2025-12-26', 'Buen estado'),
+(311, '2025-12-27', 'Leve desgaste'),
+(312, '2025-12-28', 'Sin observaciones'),
+(314, '2025-12-30', 'Buen estado'),
+(315, '2025-12-31', 'Perfecto estado');
