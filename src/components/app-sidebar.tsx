@@ -19,11 +19,6 @@ import { usePathname } from "next/navigation"
 import { title } from "process"
 
 const data = {
-  user: {
-    name: "Admin",
-    email: "admin@biblioteca.com",
-    avatar: "/avatars/admin.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
