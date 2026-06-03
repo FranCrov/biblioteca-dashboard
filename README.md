@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Biblioteca Dashboard
 
-## Getting Started
+Dashboard web desarrollado para la gestión y análisis de información bibliográfica, diseñado para brindar a administradores y responsables de bibliotecas una visión integral sobre el estado del catálogo, préstamos, disponibilidad y métricas de rendimiento, facilitando la toma de decisiones basada en datos.
 
-First, run the development server:
+Objetivo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+El proyecto fue concebido como una plataforma de Business Intelligence orientada a bibliotecas, permitiendo centralizar información relevante y visualizar indicadores clave mediante paneles interactivos y reportes dinámicos.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Características Principales
+Gestión y consulta de información bibliográfica almacenada en base de datos.
+Visualización de métricas y estadísticas sobre el catálogo de libros.
+Dashboard interactivo con navegación tipo Drill Down para explorar información desde indicadores generales hasta datos específicos.
+Semaforización visual para identificar rápidamente el estado y desempeño de los libros según su nivel de circulación y demanda.
+Sistema de autenticación y autorización de usuarios mediante Clerk.
+Consultas optimizadas a base de datos para obtener información relevante en tiempo real.
+Interfaz responsive y moderna orientada a la experiencia del usuario.
+Tecnologías Utilizadas
+Frontend
+Next.js
+React
+TypeScript
+Tailwind CSS
+shadcn/ui
+Backend y Persistencia
+Node.js
+Prisma ORM
+MySQL
+Autenticación
+Clerk Authentication
+Arquitectura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+La aplicación fue desarrollada utilizando TypeScript en toda la solución, implementando una arquitectura basada en componentes reutilizables y separación de responsabilidades entre presentación, lógica de negocio y acceso a datos.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Prisma ORM fue utilizado para abstraer el acceso a la base de datos MySQL, facilitando la construcción de consultas tipadas y seguras, mientras que Clerk se encargó de la gestión de usuarios, autenticación y control de acceso.
 
-## Learn More
+Funcionalidades Analíticas
+Indicadores de rendimiento del catálogo.
+Análisis de disponibilidad de libros.
+Estadísticas de préstamos y circulación.
+Clasificación visual mediante semaforización.
+Navegación Drill Down para profundizar en los datos.
+Soporte para consultas estratégicas orientadas a la toma de decisiones.
+Aprendizajes del Proyecto
 
-To learn more about Next.js, take a look at the following resources:
+Durante el desarrollo se aplicaron conceptos de:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Desarrollo Full Stack con TypeScript.
+Diseño de dashboards analíticos.
+Integración de servicios SaaS.
+Gestión de autenticación y autorización.
+Modelado de bases de datos relacionales.
+Consumo y optimización de consultas mediante Prisma ORM.
+Desarrollo colaborativo utilizando Git y GitHub.
