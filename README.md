@@ -1,61 +1,39 @@
-Biblioteca Dashboard
+📚 Biblioteca Dashboard
 
-Dashboard web desarrollado para la gestión y análisis de información bibliográfica, diseñado para brindar a administradores y responsables de bibliotecas una visión integral sobre el estado del catálogo, préstamos, disponibilidad y métricas de rendimiento, facilitando la toma de decisiones basada en datos.
+Biblioteca Dashboard es una plataforma web desarrollada para centralizar, visualizar y analizar información bibliográfica mediante paneles interactivos y métricas en tiempo real. El sistema fue diseñado con el objetivo de proporcionar herramientas de análisis que permitan a administradores y responsables de bibliotecas tomar decisiones basadas en datos sobre la gestión del catálogo, disponibilidad de ejemplares y comportamiento de los usuarios.
 
-Objetivo
-
-El proyecto fue concebido como una plataforma de Business Intelligence orientada a bibliotecas, permitiendo centralizar información relevante y visualizar indicadores clave mediante paneles interactivos y reportes dinámicos.
-
-Características Principales
-
-Gestión y consulta de información bibliográfica almacenada en base de datos.									
-Visualización de métricas y estadísticas sobre el catálogo de libros.
-
-Dashboard interactivo con navegación tipo Drill Down para explorar información desde indicadores generales hasta datos específicos.
-
-Semaforización visual para identificar rápidamente el estado y desempeño de los libros según su nivel de circulación y demanda.
-
-Sistema de autenticación y autorización de usuarios mediante Clerk.
-
-Consultas optimizadas a base de datos para obtener información relevante en tiempo real.
-
-Interfaz responsive y moderna orientada a la experiencia del usuario.
-
-
-Tecnologías Utilizadas
+🚀 Características Principales
+Desarrollo de una aplicación Full Stack utilizando Next.js, React y TypeScript.
+Implementación de autenticación y control de acceso mediante Clerk Authentication.
+Diseño de interfaces modernas, responsivas y accesibles utilizando Tailwind CSS y componentes reutilizables de shadcn/ui.
+Modelado y gestión de datos mediante Prisma ORM sobre una base de datos MySQL.
+Construcción de dashboards interactivos para la visualización de indicadores y métricas bibliotecarias.
+Implementación de navegación tipo Drill Down, permitiendo explorar información desde métricas generales hasta datos específicos de cada libro.
+Desarrollo de consultas analíticas para obtener información sobre disponibilidad, préstamos y comportamiento del catálogo bibliográfico.
+Aplicación de semaforización visual para clasificar libros según niveles de circulación y demanda.
+Generación de reportes e indicadores orientados al análisis de datos y la toma de decisiones.
+Arquitectura basada en componentes reutilizables y buenas prácticas de desarrollo escalable.
+📊 Funcionalidades Analíticas
+Visualización de estadísticas generales de la biblioteca.
+Monitoreo de disponibilidad de ejemplares.
+Análisis de préstamos y circulación de libros.
+Identificación de libros con alta, media o baja demanda mediante indicadores visuales.
+Exploración detallada de información a través de navegación jerárquica (Drill Down).
+Consulta y gestión eficiente de datos bibliográficos.
+🛠️ Tecnologías Utilizadas
 Frontend
 Next.js
 React
 TypeScript
 Tailwind CSS
 shadcn/ui
-Backend y Persistencia
+Backend
 Node.js
 Prisma ORM
+Base de Datos
 MySQL
-Autenticación
+Servicios Externos
 Clerk Authentication
-Arquitectura
+🎯 Objetivo del Proyecto
 
-La aplicación fue desarrollada utilizando TypeScript en toda la solución, implementando una arquitectura basada en componentes reutilizables y separación de responsabilidades entre presentación, lógica de negocio y acceso a datos.
-
-Prisma ORM fue utilizado para abstraer el acceso a la base de datos MySQL, facilitando la construcción de consultas tipadas y seguras, mientras que Clerk se encargó de la gestión de usuarios, autenticación y control de acceso.
-
-Funcionalidades Analíticas
-Indicadores de rendimiento del catálogo.
-Análisis de disponibilidad de libros.
-Estadísticas de préstamos y circulación.
-Clasificación visual mediante semaforización.
-Navegación Drill Down para profundizar en los datos.
-Soporte para consultas estratégicas orientadas a la toma de decisiones.
-Aprendizajes del Proyecto
-
-Durante el desarrollo se aplicaron conceptos de:
-
-Desarrollo Full Stack con TypeScript.
-Diseño de dashboards analíticos.
-Integración de servicios SaaS.
-Gestión de autenticación y autorización.
-Modelado de bases de datos relacionales.
-Consumo y optimización de consultas mediante Prisma ORM.
-Desarrollo colaborativo utilizando Git y GitHub.
+El propósito de este proyecto fue aplicar conceptos de desarrollo Full Stack, modelado de bases de datos relacionales, diseño de dashboards analíticos y visualización de información para construir una solución que facilite la gestión y el análisis estratégico de datos dentro de una biblioteca.
