@@ -8,13 +8,20 @@ El proyecto fue concebido como una plataforma de Business Intelligence orientada
 
 Características Principales
 
-Gestión y consulta de información bibliográfica almacenada en base de datos.
+Gestión y consulta de información bibliográfica almacenada en base de datos.									
 Visualización de métricas y estadísticas sobre el catálogo de libros.
+
 Dashboard interactivo con navegación tipo Drill Down para explorar información desde indicadores generales hasta datos específicos.
+
 Semaforización visual para identificar rápidamente el estado y desempeño de los libros según su nivel de circulación y demanda.
+
 Sistema de autenticación y autorización de usuarios mediante Clerk.
+
 Consultas optimizadas a base de datos para obtener información relevante en tiempo real.
+
 Interfaz responsive y moderna orientada a la experiencia del usuario.
+
+
 Tecnologías Utilizadas
 Frontend
 Next.js
