@@ -1,4 +1,4 @@
-# 📚 Biblioteca Dashboard
+#  Biblioteca Dashboard
 
 Biblioteca Dashboard es una plataforma web desarrollada para centralizar, visualizar y analizar información bibliográfica mediante paneles interactivos y métricas en tiempo real.
 
@@ -6,7 +6,7 @@ El sistema fue diseñado con el objetivo de proporcionar herramientas de anális
 
 ---
 
-## 🚀 Características Principales
+##  Características Principales
 
 - Desarrollo de una aplicación Full Stack utilizando **Next.js**, **React** y **TypeScript**.
 - Implementación de autenticación y control de acceso mediante **Clerk Authentication**.
@@ -21,7 +21,7 @@ El sistema fue diseñado con el objetivo de proporcionar herramientas de anális
 
 ---
 
-## 📊 Funcionalidades Analíticas
+##  Funcionalidades Analíticas
 
 - Visualización de estadísticas generales de la biblioteca.
 - Monitoreo de disponibilidad de ejemplares.
@@ -32,7 +32,7 @@ El sistema fue diseñado con el objetivo de proporcionar herramientas de anális
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 ### Frontend
 
@@ -57,13 +57,13 @@ El sistema fue diseñado con el objetivo de proporcionar herramientas de anális
 
 ---
 
-## 🎯 Objetivo del Proyecto
+##  Objetivo del Proyecto
 
 El propósito de este proyecto fue aplicar conceptos de desarrollo Full Stack, modelado de bases de datos relacionales, diseño de dashboards analíticos y visualización de información para construir una solución que facilite la gestión y el análisis estratégico de datos dentro de una biblioteca.
 
 ---
 
-## 💡 Conceptos Aplicados
+##  Conceptos Aplicados
 
 - Desarrollo Full Stack con TypeScript.
 - Arquitectura basada en componentes reutilizables.
