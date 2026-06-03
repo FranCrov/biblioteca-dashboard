@@ -7,6 +7,7 @@ Objetivo
 El proyecto fue concebido como una plataforma de Business Intelligence orientada a bibliotecas, permitiendo centralizar información relevante y visualizar indicadores clave mediante paneles interactivos y reportes dinámicos.
 
 Características Principales
+
 Gestión y consulta de información bibliográfica almacenada en base de datos.
 Visualización de métricas y estadísticas sobre el catálogo de libros.
 Dashboard interactivo con navegación tipo Drill Down para explorar información desde indicadores generales hasta datos específicos.
